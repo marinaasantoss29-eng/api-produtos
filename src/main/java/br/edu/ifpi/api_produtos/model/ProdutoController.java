@@ -1,9 +1,6 @@
 package br.edu.ifpi.api_produtos.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,9 @@ public class ProdutoController {
 
     @GetMapping("/destaque")
     public List<Produto> listarDestaque() {
-        return produtos.stream().filter(Produto::getDestaque).toList();
+        return produtos.stream()
+                .filter(p -> Boolean.TRUE.equals(p.getDestaque()))
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -40,4 +39,10 @@ public class ProdutoController {
         return produto.getDescricao();
     }
 
+    @PostMapping
+    public Produto adicionarProduto(@RequestBody Produto produto) {
+        produtos.add(produto);
+        return produto;
+    }
 }
+
