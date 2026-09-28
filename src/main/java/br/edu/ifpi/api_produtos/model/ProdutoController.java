@@ -23,10 +23,21 @@ public class ProdutoController {
     public List<Produto> listar() {
         return produtos;
     }
-    
+
+    @GetMapping("/destaque")
+    public List<Produto> listarDestaque() {
+        return produtos.stream().filter(Produto::getDestaque).toList();
+    }
+
     @GetMapping("/{id}")
     public Produto buscarProduto(@PathVariable Long id){
         return produtos.get(id.intValue() - 1);
     }
-    
+
+    @GetMapping("{id}/descricao")
+    public String buscarDescricao(@PathVariable Long id) {
+        Produto produto = buscarProduto(id);
+        return produto.getDescricao();
+    }
+
 }
